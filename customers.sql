@@ -29,7 +29,7 @@ rename_orders as (
 base as (
 select *
 from reaname_customers
-join rename_orders using (customer_id)
+inner join rename_orders using (customer_id)
 )
 
 select * from base 
