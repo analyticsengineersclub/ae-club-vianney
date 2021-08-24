@@ -10,18 +10,18 @@ orders as (
 
 reaname_customers as (
     select 
-    id as customer_id,
-    name,
-    email
+        id as customer_id,
+        name,
+        email
    
     from customers 
 ),
 
 rename_orders as (
     select  
-    customer_id,
-    created_at as first_order_at,
-    total as number_of_orders
+        customer_id,
+        created_at as first_order_at,
+        total as number_of_orders
 
     from orders
 ),
