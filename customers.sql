@@ -32,4 +32,5 @@ from reaname_customers
 inner join rename_orders using (customer_id)
 )
 
-select * from rename_customers 
+select * from rename_orders
+--changed line 35 to select from a different base 
