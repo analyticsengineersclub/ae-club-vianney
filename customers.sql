@@ -1,35 +1,21 @@
-with customers as (
-    select * 
-    from `analytics-engineers-club.coffee_shop.customers`
-),
-
-orders as (
-    select *
-    from `analytics-engineers-club.coffee_shop.orders`
-),
-
-reaname_customers as (
-    select 
-        id as customer_id,
-        name,
-        email
-   
-    from customers 
-),
-
-rename_orders as (
-    select  
+with customer_orders as (
+    select
         customer_id,
-        created_at as first_order_at,
-        total as number_of_orders
-
-    from orders
-),
-
-base as (
-select *
-from reaname_customers
-inner join rename_orders using (customer_id)
+        count(*) as number_of_orders,
+        min(created_at) as first_order_at,
+        sum(total) as total_order_value
+    from `analytics-engineers-club.coffee_shop.orders`
+    group by 1
 )
 
-select * from base
+select
+    c.id AS customer_id,
+    c.name,
+    c.email,
+    co.first_order_at,
+    co.number_of_orders,
+    co.total_order_value
+
+from `analytics-engineers-club.coffee_shop.customers` as c
+left join customer_orders as co
+    on c.id = co.customer_id
